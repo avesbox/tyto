@@ -1,0 +1,28 @@
+<html><head><script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head><body>
+<canvas id="myChart" width="400" height="200"></canvas>
+<script>
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+labels: ["Example Benchmark","Another Benchmark","Yet Another Benchmark"],
+datasets: [
+{
+label: 'Scores',
+data: [4128861.3,2017169.4,1476013.1],
+backgroundColor: 'rgba(75, 192, 192, 0.2)',
+borderColor: 'rgba(75, 192, 192, 1)',
+borderWidth: 1
+}
+]
+},
+options: {
+scales: {
+y: {
+beginAtZero: true
+}
+}
+}
+});
+</script>
+</body></html>
