@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1-dev.2
+
+- Pass also results with 0 score
+
 ## 0.0.1-dev.1
 
 - Remove the need of Isolates to run the onRun function in Benchmarks.

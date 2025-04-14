@@ -65,9 +65,11 @@ class Suite {
         score = BenchmarkResult.zero(benchmark.$2.name, benchmark.$2.group);
         stdout.writeln(
             '\tError: ${e.toString()}\n\tSkipping this benchmark.\n');
-        continue;
       }
       _scores[benchmark.$1] = score;
+      if(score.avgScorePerSecond == 0) {
+        continue;
+      }
       stdout.writeln(
           '\t${score.avgScorePerSecond} ops/sec ± ${score.stdDevPercentage.toStringAsFixed(2)}%\n');
     }
