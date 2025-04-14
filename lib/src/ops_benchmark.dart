@@ -60,9 +60,11 @@ class OpsBenchmarkBase {
     }
     final mean = results.reduce((a, b) => a + b) / results.length;
     final meanPerSecond = mean / measureDuration.inEffectiveSeconds;
-    final variance =
-        results.map((e) => pow(((e / measureDuration.inEffectiveSeconds) - meanPerSecond), 2)).reduce((a, b) => a + b) /
-            results.length;
+    final variance = results
+            .map((e) => pow(
+                ((e / measureDuration.inEffectiveSeconds) - meanPerSecond), 2))
+            .reduce((a, b) => a + b) /
+        results.length;
     final stdDev = sqrt(variance);
     final stdDevPercentage = (stdDev / meanPerSecond) * 100;
     return BenchmarkResult(
@@ -101,6 +103,6 @@ final class BenchmarkResult {
   }
 
   /// Indicates if the benchmark case is the best case.
-  const BenchmarkResult(
-      this.name, this.group, this.avgScore, this.avgScorePerSecond, this.stdDevPercentage, this.stdDev);
+  const BenchmarkResult(this.name, this.group, this.avgScore,
+      this.avgScorePerSecond, this.stdDevPercentage, this.stdDev);
 }

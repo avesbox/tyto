@@ -36,7 +36,7 @@ class Suite {
 
   /// Creates a new instance of [Suite].
   Suite({
-      this.measureDuration = const Duration(seconds: 1),
+    this.measureDuration = const Duration(seconds: 1),
   });
 
   /// Adds a benchmark to the suite.
@@ -51,11 +51,12 @@ class Suite {
 
   /// Runs the benchmarks in the suite and generates the reports.
   Future<List<CaseResult>> run() async {
-    if(measureDuration.isNegative || measureDuration.inEffectiveSeconds == 0) {
+    if (measureDuration.isNegative || measureDuration.inEffectiveSeconds == 0) {
       throw ArgumentError('Measure duration must be greater than 0 seconds.');
     }
     stdout.writeln('Running benchmarks...\n');
-    stdout.writeln('Each case will be run for ${measureDuration.inEffectiveSeconds} seconds.\n');
+    stdout.writeln(
+        'Each case will be run for ${measureDuration.inEffectiveSeconds} seconds.\n');
     for (final benchmark in _benchmarks.indexed) {
       stdout.writeln('${benchmark.$2.name}:\n');
       BenchmarkResult score;
@@ -63,11 +64,11 @@ class Suite {
         score = await benchmark.$2.measure(measureDuration);
       } catch (e) {
         score = BenchmarkResult.zero(benchmark.$2.name, benchmark.$2.group);
-        stdout.writeln(
-            '\tError: ${e.toString()}\n\tSkipping this benchmark.\n');
+        stdout
+            .writeln('\tError: ${e.toString()}\n\tSkipping this benchmark.\n');
       }
       _scores[benchmark.$1] = score;
-      if(score.avgScorePerSecond == 0) {
+      if (score.avgScorePerSecond == 0) {
         continue;
       }
       stdout.writeln(

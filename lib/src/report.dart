@@ -89,7 +89,8 @@ class Report {
     final csvList = results.map((result) => result.toMap()).toList();
     final file = File('${Directory.current.absolute.path}/$name.csv');
     final csvString = StringBuffer();
-    csvString.writeln('Name,Group,AverageScore,AverageScorePerSecond,StdDev,StdDevPercentage,Best,Worst');
+    csvString.writeln(
+        'Name,Group,AverageScore,AverageScorePerSecond,StdDev,StdDevPercentage,Best,Worst');
     for (final result in csvList) {
       csvString.writeln(
           '${result['name']},${result['group']},${result['avgScore']},${result['avgScorePerSecond']},${result['stdDev']},${result['stdDevPercentage']},${result['best'] ? 1 : 0},${result['worst'] ? 1 : 0}');
