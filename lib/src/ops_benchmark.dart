@@ -1,5 +1,6 @@
-import 'dart:isolate';
 import 'dart:math';
+
+import 'package:tyto/src/utils.dart';
 
 /// A base class for running ops benchmarks in Dart.
 class OpsBenchmarkBase {
@@ -44,32 +45,31 @@ class OpsBenchmarkBase {
   Future<BenchmarkResult> measure(Duration measureDuration) async {
     final results = [];
     for (int i = 0; i < 10; i++) {
-      final result = await Isolate.run<double>(() async {
-        await onSetup();
-        await warmup();
-        final stopwatch = Stopwatch()..start();
-        int iterations = 0;
-        while (stopwatch.elapsed < measureDuration) {
-          await onRun();
-          iterations++;
-        }
-        await onTeardown();
-        stopwatch.stop();
-        final score = iterations.toDouble();
-        return score;
-      });
+      await onSetup();
+      await warmup();
+      final stopwatch = Stopwatch()..start();
+      int iterations = 0;
+      while (stopwatch.elapsed < measureDuration) {
+        await onRun();
+        iterations++;
+      }
+      await onTeardown();
+      stopwatch.stop();
+      final result = iterations.toDouble();
       results.add(result);
     }
     final mean = results.reduce((a, b) => a + b) / results.length;
+    final meanPerSecond = mean / measureDuration.inEffectiveSeconds;
     final variance =
-        results.map((e) => (e - mean) * (e - mean)).reduce((a, b) => a + b) /
+        results.map((e) => pow(((e / measureDuration.inEffectiveSeconds) - meanPerSecond), 2)).reduce((a, b) => a + b) /
             results.length;
     final stdDev = sqrt(variance);
-    final stdDevPercentage = (stdDev / mean) * 100;
+    final stdDevPercentage = (stdDev / meanPerSecond) * 100;
     return BenchmarkResult(
       name,
       group,
       mean,
+      meanPerSecond,
       stdDevPercentage,
       stdDev,
     );
@@ -87,13 +87,20 @@ final class BenchmarkResult {
   /// The average score of the benchmark case.
   final double avgScore;
 
+  // The average score per second of the benchmark case.
+  final double avgScorePerSecond;
+
   /// The standard deviation percentage of the benchmark case.
   final double stdDevPercentage;
 
   /// The standard deviation of the benchmark case.
   final double stdDev;
 
+  factory BenchmarkResult.zero(String name, String group) {
+    return BenchmarkResult(name, group, 0.0, 0.0, 0.0, 0.0);
+  }
+
   /// Indicates if the benchmark case is the best case.
   const BenchmarkResult(
-      this.name, this.group, this.avgScore, this.stdDevPercentage, this.stdDev);
+      this.name, this.group, this.avgScore, this.avgScorePerSecond, this.stdDevPercentage, this.stdDev);
 }

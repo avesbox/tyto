@@ -5,7 +5,9 @@ import 'package:tyto/src/report.dart';
 import 'package:tyto/src/suite.dart';
 
 void main(List<String> arguments) {
-  Suite suite = Suite();
+  Suite suite = Suite(
+    measureDuration: const Duration(days: 1),
+  );
   suite.add(OpsBenchmarkBase('Example Benchmark', onRun: () async {
     Random random = Random();
     int sum = 0;

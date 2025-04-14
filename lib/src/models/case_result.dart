@@ -11,6 +11,9 @@ class CaseResult {
   /// The average score of the benchmark case.
   final double avgScore;
 
+  /// The average score per second of the benchmark case.
+  final double avgScorePerSecond;
+
   /// The standard deviation percentage of the benchmark case.
   final double stdDevPercentage;
 
@@ -31,6 +34,7 @@ class CaseResult {
     required this.group,
     required this.name,
     required this.avgScore,
+    required this.avgScorePerSecond,
     required this.stdDevPercentage,
     required this.stdDev,
     required this.best,
@@ -44,6 +48,7 @@ class CaseResult {
       'group': group,
       'name': name,
       'avgScore': avgScore,
+      'avgScorePerSecond': avgScorePerSecond,
       'stdDevPercentage': stdDevPercentage,
       'stdDev': stdDev,
       'best': best,

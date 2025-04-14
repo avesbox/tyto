@@ -1,4 +1,4 @@
-Name,Group,Score,StdDev,StdDevPercentage,Best,Worst
-Example Benchmark,default,null,84495.18228757188,2.0464524271515705,1,0
-Another Benchmark,default,null,1005720.7485229883,49.85802127094473,0,0
-Yet Another Benchmark,default,null,55298.71888832507,3.7464924185513713,0,1
+Name,Group,AverageScore,AverageScorePerSecond,StdDev,StdDevPercentage,Best,Worst
+Example Benchmark,default,5992.9,2397160.0,1279641.9930589963,53.38158458588481,0,1
+Another Benchmark,default,9835.9,3934360.0,1475184.4516534195,37.494902643718916,0,0
+Yet Another Benchmark,default,10116.0,4046400.0,515033.5445386058,12.728191591009436,1,0
