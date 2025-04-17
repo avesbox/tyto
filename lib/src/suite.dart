@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:logging/logging.dart' as logging;
 import 'package:tyto/src/models/case_result.dart';
 import 'package:tyto/src/ops_benchmark.dart';
 import 'package:tyto/src/report.dart';
@@ -7,6 +6,8 @@ import 'package:tyto/src/utils.dart';
 
 /// A class that represents a suite of benchmarks.
 class Suite {
+  final logging.Logger _logger = logging.Logger('Suite');
+
   /// The duration for which each benchmark will be run.
   final Duration measureDuration;
 
@@ -37,7 +38,11 @@ class Suite {
   /// Creates a new instance of [Suite].
   Suite({
     this.measureDuration = const Duration(seconds: 1),
-  });
+  }) {
+    logging.Logger.root.onRecord.listen((record) {
+      print(record.message);
+    });
+  }
 
   /// Adds a benchmark to the suite.
   void add(OpsBenchmarkBase benchmark) {
@@ -50,31 +55,34 @@ class Suite {
   }
 
   /// Runs the benchmarks in the suite and generates the reports.
-  Future<List<CaseResult>> run() async {
+  Future<List<CaseResult>> run({bool removeLogs = true}) async {
+    if (removeLogs) {
+      logging.Logger.root.level = logging.Level.OFF;
+      logging.Logger.root.clearListeners();
+    }
     if (measureDuration.isNegative || measureDuration.inEffectiveSeconds == 0) {
       throw ArgumentError('Measure duration must be greater than 0 seconds.');
     }
-    stdout.writeln('Running benchmarks...\n');
-    stdout.writeln(
+    _logger.info('Running benchmarks...\n');
+    _logger.info(
         'Each case will be run for ${measureDuration.inEffectiveSeconds} seconds.\n');
     for (final benchmark in _benchmarks.indexed) {
-      stdout.writeln('${benchmark.$2.name}:\n');
+      _logger.info('${benchmark.$2.name}:\n');
       BenchmarkResult score;
       try {
         score = await benchmark.$2.measure(measureDuration);
       } catch (e) {
         score = BenchmarkResult.zero(benchmark.$2.name, benchmark.$2.group);
-        stdout
-            .writeln('\tError: ${e.toString()}\n\tSkipping this benchmark.\n');
+        _logger.info('\tError: ${e.toString()}\n\tSkipping this benchmark.\n');
       }
       _scores[benchmark.$1] = score;
       if (score.avgScorePerSecond == 0) {
         continue;
       }
-      stdout.writeln(
+      _logger.info(
           '\t${score.avgScorePerSecond} ops/sec ± ${score.stdDevPercentage.toStringAsFixed(2)}%\n');
     }
-    stdout.writeln('Finished ${_benchmarks.length} cases.');
+    _logger.info('Finished ${_benchmarks.length} cases.');
     _currentBest = double.negativeInfinity;
     _currentWorst = double.infinity;
     for (final entry in _scores.entries) {
@@ -140,6 +148,6 @@ class Suite {
       output.writeln('${benchmark.name} - $status');
     }
     // Print the results
-    stdout.writeln(output);
+    _logger.info(output);
   }
 }

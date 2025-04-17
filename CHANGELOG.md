@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1-dev.3
+
+- Add the possibility to turn on the logging of the benchmark results. (false by default)
+
 ## 0.0.1-dev.2
 
 - Pass also results with 0 score
