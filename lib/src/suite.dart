@@ -122,7 +122,7 @@ class Suite {
         stdDevPercentage: score.stdDevPercentage,
         stdDev: score.stdDev,
         best: isBest,
-        differenceFromBest: differenceFromBest,
+        differenceFromBest: differenceFromBest.isNaN ? 0 : differenceFromBest,
         worst: isWorst,
         avgTime: score.avgTime,
         minTime: score.minTime,

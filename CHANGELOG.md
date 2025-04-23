@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1-dev.5
+
+- Fix NaN in differenceFromBest when the best score is 0.
+
 ## 0.0.1-dev.4
 
 - Add the time spent in the onRun function to the benchmark results.
