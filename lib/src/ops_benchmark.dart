@@ -38,19 +38,25 @@ class OpsBenchmarkBase {
 
   /// Warms up the benchmark by running it once before measuring.
   Future<void> warmup() async {
-    await onRun();
+    for(int i = 0; i < 10; i++) {
+      await onRun();
+    }
   }
 
   /// Measures the benchmark for a given duration and returns the result.
   Future<BenchmarkResult> measure(Duration measureDuration) async {
     final results = [];
+    List<int> iterationsMicroseconds = [];
     for (int i = 0; i < 10; i++) {
       await onSetup();
       await warmup();
       final stopwatch = Stopwatch()..start();
       int iterations = 0;
       while (stopwatch.elapsed < measureDuration) {
+        final iterationStopwatch = Stopwatch()..start();
         await onRun();
+        iterationStopwatch.stop();
+        iterationsMicroseconds.add(iterationStopwatch.elapsedTicks);
         iterations++;
       }
       await onTeardown();
@@ -67,6 +73,15 @@ class OpsBenchmarkBase {
         results.length;
     final stdDev = sqrt(variance);
     final stdDevPercentage = (stdDev / meanPerSecond) * 100;
+    final sortedIterations = iterationsMicroseconds..sort();
+    final p75Time = sortedIterations[(sortedIterations.length * 0.75).toInt()];
+    final p95Time = sortedIterations[(sortedIterations.length * 0.95).toInt()];
+    final p99Time = sortedIterations[(sortedIterations.length * 0.99).toInt()];
+    final p999Time = sortedIterations[(sortedIterations.length * 0.999).toInt()];
+    final minTime = sortedIterations.first;
+    final maxTime = sortedIterations.last;
+    final meanTime = iterationsMicroseconds.reduce((a, b) => a + b) /
+        iterationsMicroseconds.length;
     return BenchmarkResult(
       name,
       group,
@@ -74,6 +89,13 @@ class OpsBenchmarkBase {
       meanPerSecond,
       stdDevPercentage,
       stdDev,
+      meanTime,
+      minTime.toDouble(),
+      maxTime.toDouble(),
+      p75Time.toDouble(),
+      p95Time.toDouble(),
+      p99Time.toDouble(),
+      p999Time.toDouble(),
     );
   }
 }
@@ -98,11 +120,33 @@ final class BenchmarkResult {
   /// The standard deviation of the benchmark case.
   final double stdDev;
 
+  /// The average time in microseconds per iteration of the benchmark case.
+  final double avgTime;
+
+  /// The minimum time in microseconds per iteration of the benchmark case.
+  final double minTime;
+
+  /// The maximum time in microseconds per iteration of the benchmark case.
+  final double maxTime;
+
+  /// p75 time in microseconds per iteration of the benchmark case.
+  final double p75Time;
+
+  /// p95 time in microseconds per iteration of the benchmark case.
+  final double p95Time;
+
+  /// p99 time in microseconds per iteration of the benchmark case.
+  final double p99Time;
+
+  /// p999 time in microseconds per iteration of the benchmark case.
+  final double p999Time;
+
   factory BenchmarkResult.zero(String name, String group) {
-    return BenchmarkResult(name, group, 0.0, 0.0, 0.0, 0.0);
+    return BenchmarkResult(name, group, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   }
 
   /// Indicates if the benchmark case is the best case.
   const BenchmarkResult(this.name, this.group, this.avgScore,
-      this.avgScorePerSecond, this.stdDevPercentage, this.stdDev);
+      this.avgScorePerSecond, this.stdDevPercentage, this.stdDev, this.avgTime, this.minTime,
+      this.maxTime, this.p75Time, this.p95Time, this.p99Time, this.p999Time);
 }

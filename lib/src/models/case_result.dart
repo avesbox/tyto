@@ -20,6 +20,27 @@ class CaseResult {
   /// The standard deviation of the benchmark case.
   final double stdDev;
 
+  /// The average time per iteration of the benchmark case.
+  final double avgTime;
+
+  /// The minimum time per iteration of the benchmark case.
+  final double minTime;
+
+  /// The maximum time per iteration of the benchmark case.
+  final double maxTime;
+
+  /// p75 time per iteration of the benchmark case.
+  final double p75Time;
+
+  /// p95 time per iteration of the benchmark case.
+  final double p95Time;
+
+  /// p99 time per iteration of the benchmark case.
+  final double p99Time;
+
+  /// p999 time per iteration of the benchmark case.
+  final double p999Time;
+
   /// Indicates if the benchmark case is the best case.
   final bool best;
 
@@ -28,6 +49,15 @@ class CaseResult {
 
   /// The difference from the best case in percentage.
   final double differenceFromBest;
+
+  /// The CPU on which the tests have been conducted.
+  final String cpu;
+
+  /// The system on which the tests have been conducted.
+  final String system;
+
+  /// The memory on which the tests have been conducted.
+  final String memory;
 
   /// Creates a new instance of [CaseResult].
   const CaseResult({
@@ -40,6 +70,16 @@ class CaseResult {
     required this.best,
     required this.differenceFromBest,
     required this.worst,
+    required this.avgTime,
+    required this.minTime,
+    required this.maxTime,
+    required this.p75Time,
+    required this.p95Time,
+    required this.p99Time,
+    required this.p999Time,
+    required this.cpu,
+    required this.system,
+    required this.memory,
   });
 
   /// Creates a new instance of [CaseResult] from a map.
@@ -54,6 +94,16 @@ class CaseResult {
       'best': best,
       'differenceFromBest': differenceFromBest,
       'worst': worst,
+      'avgTime': avgTime,
+      'minTime': minTime,
+      'maxTime': maxTime,
+      'p75Time': p75Time,
+      'p95Time': p95Time,
+      'p99Time': p99Time,
+      'p999Time': p999Time,
+      'cpu': cpu,
+      'system': system,
+      'memory': memory,
     };
   }
 }

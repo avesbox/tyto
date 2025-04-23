@@ -6,7 +6,7 @@ import 'package:tyto/src/suite.dart';
 
 void main(List<String> arguments) {
   Suite suite = Suite(
-    measureDuration: const Duration(days: 1),
+    measureDuration: const Duration(seconds: 1),
   );
   suite.add(OpsBenchmarkBase('Example Benchmark', onRun: () async {
     Random random = Random();
@@ -47,5 +47,5 @@ void main(List<String> arguments) {
     'benchmark_results',
     ReportType.htmlTable,
   ));
-  suite.run();
+  suite.run(removeLogs: false);
 }

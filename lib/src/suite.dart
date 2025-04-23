@@ -1,4 +1,5 @@
 import 'package:logging/logging.dart' as logging;
+import 'package:system_info2/system_info2.dart';
 import 'package:tyto/src/models/case_result.dart';
 import 'package:tyto/src/ops_benchmark.dart';
 import 'package:tyto/src/report.dart';
@@ -81,6 +82,10 @@ class Suite {
       }
       _logger.info(
           '\t${score.avgScorePerSecond} ops/sec ± ${score.stdDevPercentage.toStringAsFixed(2)}%\n');
+      _logger.info(
+          '\tAvg: ${score.avgTime.toStringAsFixed(2)} μs, Min: ${score.minTime.toStringAsFixed(2)} μs, Max: ${score.maxTime.toStringAsFixed(2)} μs\n');
+      _logger.info(
+          '\tp75: ${score.p75Time.toStringAsFixed(2)} μs, p95: ${score.p95Time.toStringAsFixed(2)} μs, p99: ${score.p99Time.toStringAsFixed(2)} μs, p999: ${score.p999Time.toStringAsFixed(2)} μs\n');
     }
     _logger.info('Finished ${_benchmarks.length} cases.');
     _currentBest = double.negativeInfinity;
@@ -119,6 +124,16 @@ class Suite {
         best: isBest,
         differenceFromBest: differenceFromBest,
         worst: isWorst,
+        avgTime: score.avgTime,
+        minTime: score.minTime,
+        maxTime: score.maxTime,
+        p75Time: score.p75Time,
+        p95Time: score.p95Time,
+        p99Time: score.p99Time,
+        p999Time: score.p999Time,
+        cpu: SysInfo.cores.first.name,
+        system: '${SysInfo.kernelName} ${SysInfo.kernelVersion}',
+        memory: '${(SysInfo.getTotalPhysicalMemory() / (1024 * 1024 * 1024)).toInt()} GB',
       ));
     }
     if (_benchmarks.length > 1) {

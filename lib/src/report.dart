@@ -90,10 +90,10 @@ class Report {
     final file = File('${Directory.current.absolute.path}/$name.csv');
     final csvString = StringBuffer();
     csvString.writeln(
-        'Name,Group,AverageScore,AverageScorePerSecond,StdDev,StdDevPercentage,Best,Worst');
+        'Name,Group,AverageScore,AverageScorePerSecond,StdDev,StdDevPercentage,Best,Worst,AvgTime,MinTime,MaxTime,P75Time,P95Time,P99Time,P999Time');
     for (final result in csvList) {
       csvString.writeln(
-          '${result['name']},${result['group']},${result['avgScore']},${result['avgScorePerSecond']},${result['stdDev']},${result['stdDevPercentage']},${result['best'] ? 1 : 0},${result['worst'] ? 1 : 0}');
+          '${result['name']},${result['group']},${result['avgScore']},${result['avgScorePerSecond']},${result['stdDev']},${result['stdDevPercentage']},${result['best'] ? 1 : 0},${result['worst'] ? 1 : 0},${result['avgTime']},${result['minTime']},${result['maxTime']},${result['p75Time']},${result['p95Time']},${result['p99Time']},${result['p999Time']}');
     }
     await file.writeAsString(csvString.toString());
     print('Generated CSV report: ${file.path}');
@@ -104,10 +104,10 @@ class Report {
     final htmlString = StringBuffer();
     htmlString.writeln('<html><body><table>');
     htmlString.writeln(
-        '<tr><th>Name</th><th>Group</th><th>Average Score</th><th>Average Score/sec</th><th>StdDev</th><th>StdDevPercentage</th><th>Best</th><th>Worst</th></tr>');
+        '<tr><th>Name</th><th>Group</th><th>Average Score</th><th>Average Score/sec</th><th>StdDev</th><th>StdDevPercentage</th><th>Best</th><th>Worst</th><th>Avg Time</th><th>Min Time</th><th>Max Time</th><th>p75 Time</th><th>p95 Time</th><th>p99 Time</th><th>p999 Time</th></tr>');
     for (final score in scores) {
       htmlString.writeln(
-          '<tr><td>${score.name}</td><td>${score.group}</td><td>${score.avgScore}</td><td>${score.avgScorePerSecond}</td><td>${score.stdDev}</td><td>${score.stdDevPercentage}</td><td>${score.best ? 1 : 0}</td><td>${score.worst ? 1 : 0}</td></tr>');
+          '<tr><td>${score.name}</td><td>${score.group}</td><td>${score.avgScore}</td><td>${score.avgScorePerSecond}</td><td>${score.stdDev}</td><td>${score.stdDevPercentage}</td><td>${score.best ? 1 : 0}</td><td>${score.worst ? 1 : 0}</td><td>${score.avgTime}</td><td>${score.minTime}</td><td>${score.maxTime}</td><td>${score.p75Time}</td><td>${score.p95Time}</td><td>${score.p99Time}</td><td>${score.p999Time}</td></tr>');
     }
     htmlString.writeln('</table></body></html>');
     await file.writeAsString(htmlString.toString());
