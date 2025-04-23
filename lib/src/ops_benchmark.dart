@@ -38,7 +38,7 @@ class OpsBenchmarkBase {
 
   /// Warms up the benchmark by running it once before measuring.
   Future<void> warmup() async {
-    for(int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++) {
       await onRun();
     }
   }
@@ -77,7 +77,8 @@ class OpsBenchmarkBase {
     final p75Time = sortedIterations[(sortedIterations.length * 0.75).toInt()];
     final p95Time = sortedIterations[(sortedIterations.length * 0.95).toInt()];
     final p99Time = sortedIterations[(sortedIterations.length * 0.99).toInt()];
-    final p999Time = sortedIterations[(sortedIterations.length * 0.999).toInt()];
+    final p999Time =
+        sortedIterations[(sortedIterations.length * 0.999).toInt()];
     final minTime = sortedIterations.first;
     final maxTime = sortedIterations.last;
     final meanTime = iterationsMicroseconds.reduce((a, b) => a + b) /
@@ -142,11 +143,23 @@ final class BenchmarkResult {
   final double p999Time;
 
   factory BenchmarkResult.zero(String name, String group) {
-    return BenchmarkResult(name, group, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+    return BenchmarkResult(
+        name, group, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
   }
 
   /// Indicates if the benchmark case is the best case.
-  const BenchmarkResult(this.name, this.group, this.avgScore,
-      this.avgScorePerSecond, this.stdDevPercentage, this.stdDev, this.avgTime, this.minTime,
-      this.maxTime, this.p75Time, this.p95Time, this.p99Time, this.p999Time);
+  const BenchmarkResult(
+      this.name,
+      this.group,
+      this.avgScore,
+      this.avgScorePerSecond,
+      this.stdDevPercentage,
+      this.stdDev,
+      this.avgTime,
+      this.minTime,
+      this.maxTime,
+      this.p75Time,
+      this.p95Time,
+      this.p99Time,
+      this.p999Time);
 }

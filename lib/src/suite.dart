@@ -133,7 +133,8 @@ class Suite {
         p999Time: score.p999Time,
         cpu: SysInfo.cores.first.name,
         system: '${SysInfo.kernelName} ${SysInfo.kernelVersion}',
-        memory: '${(SysInfo.getTotalPhysicalMemory() / (1024 * 1024 * 1024)).toInt()} GB',
+        memory:
+            '${(SysInfo.getTotalPhysicalMemory() / (1024 * 1024 * 1024)).toInt()} GB',
       ));
     }
     if (_benchmarks.length > 1) {
