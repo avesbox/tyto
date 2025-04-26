@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1-dev.6
+
+- Fix value of memory in the benchmark results.
+
 ## 0.0.1-dev.5
 
 - Fix NaN in differenceFromBest when the best score is 0.

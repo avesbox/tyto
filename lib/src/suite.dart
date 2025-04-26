@@ -134,7 +134,7 @@ class Suite {
         cpu: SysInfo.cores.first.name,
         system: '${SysInfo.kernelName} ${SysInfo.kernelVersion}',
         memory:
-            '${(SysInfo.getTotalPhysicalMemory() / (1024 * 1024 * 1024)).toInt()} GB',
+            '${(SysInfo.getTotalPhysicalMemory() / (1024 * 1024 * 1024)).ceil()} GB',
       ));
     }
     if (_benchmarks.length > 1) {
