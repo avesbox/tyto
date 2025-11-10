@@ -1,6 +1,6 @@
 name: tyto
 description: A dead simple benchmarking library for Dart and Flutter.
-version: 0.0.1-dev.6
+version: 0.0.1
 repository: https://github.com/avesbox/tyto
 
 environment:

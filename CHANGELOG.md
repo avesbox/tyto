@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1
+
+- Add ReactiveBenchmark.
+
 ## 0.0.1-dev.6
 
 - Fix value of memory in the benchmark results.

@@ -1,7 +1,7 @@
 import 'package:logging/logging.dart' as logging;
 import 'package:system_info2/system_info2.dart';
+import 'package:tyto/src/benchmarks/benchmark_base.dart';
 import 'package:tyto/src/models/case_result.dart';
-import 'package:tyto/src/ops_benchmark.dart';
 import 'package:tyto/src/report.dart';
 import 'package:tyto/src/utils.dart';
 
@@ -13,7 +13,7 @@ class Suite {
   final Duration measureDuration;
 
   /// A list of benchmarks to be run in the suite.
-  final List<OpsBenchmarkBase> _benchmarks = [];
+  final List<BenchmarkBase> _benchmarks = [];
 
   /// A list of reports to be generated after running the benchmarks.
   final List<Report> _reports = [];
@@ -46,7 +46,7 @@ class Suite {
   }
 
   /// Adds a benchmark to the suite.
-  void add(OpsBenchmarkBase benchmark) {
+  void add(BenchmarkBase benchmark) {
     _benchmarks.add(benchmark);
   }
 
