@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1+1
+
+- Add exports
+
 ## 0.0.1
 
 - Add ReactiveBenchmark.
