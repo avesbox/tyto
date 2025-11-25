@@ -19,6 +19,8 @@ abstract class BenchmarkBase {
   /// The group to which the benchmark belongs.
   final String group;
 
+  final String? warningMessage;
+
   /// Creates a new instance of [BenchmarkBase].
   const BenchmarkBase(
     this.name, {
@@ -26,6 +28,7 @@ abstract class BenchmarkBase {
     this.group = 'default',
     this.onSetup = _emptySetup,
     this.onTeardown = _emptyTeardown,
+    this.warningMessage,
   });
 
   static Future<void> _emptySetup() async {}

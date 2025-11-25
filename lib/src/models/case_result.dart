@@ -8,6 +8,9 @@ class CaseResult {
   /// The name of the benchmark case.
   final String name;
 
+  /// A warning message associated with the benchmark case, if any.
+  final String? warningMessage;
+
   /// The average score of the benchmark case.
   final double avgScore;
 
@@ -80,6 +83,7 @@ class CaseResult {
     required this.cpu,
     required this.system,
     required this.memory,
+    this.warningMessage,
   });
 
   /// Creates a new instance of [CaseResult] from a map.
@@ -87,6 +91,7 @@ class CaseResult {
     return {
       'group': group,
       'name': name,
+      'warningMessage': warningMessage,
       'avgScore': avgScore,
       'avgScorePerSecond': avgScorePerSecond,
       'stdDevPercentage': stdDevPercentage,

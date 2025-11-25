@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.1+2
+
+- Add Warning Message to BenchmarkBase.
+
 ## 0.0.1+1
 
 - Add exports

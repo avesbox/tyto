@@ -117,6 +117,7 @@ class Suite {
       results.add(CaseResult(
         group: benchmark.group,
         name: benchmark.name,
+        warningMessage: benchmark.warningMessage,
         avgScore: score.avgScore,
         avgScorePerSecond: score.avgScorePerSecond,
         stdDevPercentage: score.stdDevPercentage,
