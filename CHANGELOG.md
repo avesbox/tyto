@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.3
+
+- Add warningMessage to OpsBenchmark.
+
 ## 0.0.2
 
 - Add Warning Message to BenchmarkBase.

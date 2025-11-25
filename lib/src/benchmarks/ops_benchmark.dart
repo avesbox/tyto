@@ -11,6 +11,7 @@ class OpsBenchmarkBase extends BenchmarkBase {
     super.group = 'default',
     super.onSetup,
     super.onTeardown,
+    super.warningMessage,
   });
 
 }
