@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.1+2
+## 0.0.2
 
 - Add Warning Message to BenchmarkBase.
 
